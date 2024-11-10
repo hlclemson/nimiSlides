@@ -511,6 +511,13 @@ template bigText*(text: string) =
 template fitImage*(src: string) =
   nbRawHtml: hlHtml"""<img data-src="$1" class="r-stretch">""" % [src]
 
+template fitVideo*(src: string) =
+  nbRawHtml: """
+<video controls class="r-stretch">
+<source src="$1" type="video/mp4">
+<source src="$1" type="video/webm">
+</video>""" % [src]
+
 template speakerNote*(text: string) =
   nbRawHtml: """
 <aside class="notes">
