@@ -38,6 +38,7 @@ type
     localReveal*: string
 
   SlideOptions* = object
+    transition*: string
     autoAnimate*: bool
     colorBackground*: string
     imageBackground*: string
@@ -46,9 +47,9 @@ type
     iframeInteractive*: bool
     gradientBackground*: string
 
-proc slideOptions*(autoAnimate = false, iframeInteractive = true, colorBackground, imageBackground, videoBackground, iframeBackground, gradientBackground: string = ""): SlideOptions =
+proc slideOptions*(transition = "slide", autoAnimate = false, iframeInteractive = true, colorBackground, imageBackground, videoBackground, iframeBackground, gradientBackground: string = ""): SlideOptions =
   SlideOptions(
-    autoAnimate: autoAnimate, iframeInteractive: iframeInteractive, colorBackground: colorBackground,
+    transition: transition, autoAnimate: autoAnimate, iframeInteractive: iframeInteractive, colorBackground: colorBackground,
     imageBackground: imageBackground, videoBackground: videoBackground,
     iframeBackground: iframeBackground,
     gradientBackground: gradientBackground,
@@ -217,6 +218,7 @@ var currentFragment*, currentSlideNumber*: int
 
 proc slideOptionsToAttributes*(options: SlideOptions): string =
   result.add """data-nimib-slide-number="$1" """ % [$currentSlideNumber]
+  result.add """data-transition="$1" """ % [options.transition]
   if options.autoAnimate:
     result.add "data-auto-animate "
   if options.colorBackground.len > 0:
